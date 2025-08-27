@@ -17,6 +17,11 @@ function notify {
   read -rp "Enter to continue"
 }
 
+if [ "$(id -u)" -ne 0 ]; then
+    echo 'This script must be run by root' >&2
+    exit 1
+fi
+
 notify install required packages
 apt-get update -y
 DEBIAN_FRONTEND=noninteractive apt-get install -y debootstrap uuid-runtime btrfs-progs dosfstools systemd-repart
